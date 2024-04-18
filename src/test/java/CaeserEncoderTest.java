@@ -5,55 +5,53 @@ import org.example.CaeserEncoder;
 public class CaeserEncoderTest {
 
     @Test
-    public void testEncrypt() {
-        // Проверяем шифрование для обычного текста
+    public void testEncrypt_WhenNormalText_ExpectedEncryption() {
         String plaintext = "hello world";
         String expectedCiphertext = "svool dliow";
-        assertEquals(expectedCiphertext, CaeserEncoder.encrypt(plaintext));
-
-        // Проверяем шифрование для текста с пробелами и знаками препинания
-        plaintext = "abc! 123";
-        expectedCiphertext = "zyx! 123";
-        assertEquals(expectedCiphertext, CaeserEncoder.encrypt(plaintext));
+        assertEquals(expectedCiphertext, CaeserEncoder.encryptCaeser(plaintext));
     }
 
     @Test
-    public void testDecrypt() {
-        // Проверяем расшифровку для зашифрованного текста
+    public void testEncrypt_WhenPunctuationMarks_ExpectedEncryption(){
+        String plaintext = "abc! 123";
+        String expectedCiphertext = "zyx! 123";
+        assertEquals(expectedCiphertext, CaeserEncoder.encryptCaeser(plaintext));
+    }
+
+    @Test
+    public void testDecrypt_WhenEncryptedText_ExpectedDecryption() {
         String ciphertext = "svool dliow";
         String expectedPlaintext = "hello world";
-        assertEquals(expectedPlaintext, CaeserEncoder.decrypt(ciphertext));
-
-        // Проверяем расшифровку для текста с пробелами и знаками препинания
-        ciphertext = "zyx! 123";
-        expectedPlaintext = "abc! 123";
-        assertEquals(expectedPlaintext, CaeserEncoder.decrypt(ciphertext));
+        assertEquals(expectedPlaintext, CaeserEncoder.decryptCaeser(ciphertext));
     }
 
     @Test
-    public void testEncryptDecryptConsistency() {
-        // Проверяем, что шифрование и расшифровка взаимно обратны
+    public void testDecrypt_WhenPunctuationMarks_ExpectedDecryption() {
+        String ciphertext = "zyx! 123";
+        String expectedPlaintext = "abc! 123";
+        assertEquals(expectedPlaintext, CaeserEncoder.decryptCaeser(ciphertext));
+    }
+
+    @Test
+    public void testEncryptDecryptConsistency_WhenNormalText_ExpectedConsistent() {
         String plaintext = "test message";
-        String encrypted = CaeserEncoder.encrypt(plaintext);
-        String decrypted = CaeserEncoder.decrypt(encrypted);
+        String encrypted = CaeserEncoder.encryptCaeser(plaintext);
+        String decrypted = CaeserEncoder.decryptCaeser(encrypted);
         assertEquals(plaintext, decrypted);
     }
 
     @Test
-    public void testEncryptDecryptEmptyString() {
-        // Проверяем работу с пустой строкой
+    public void testEncryptDecryptEmptyString_WhenEmptyString_ExpectedNoChange() {
         String plaintext = "";
-        String encrypted = CaeserEncoder.encrypt(plaintext);
-        String decrypted = CaeserEncoder.decrypt(encrypted);
+        String encrypted = CaeserEncoder.encryptCaeser(plaintext);
+        String decrypted = CaeserEncoder.decryptCaeser(encrypted);
         assertEquals(plaintext, decrypted);
     }
 
     @Test
-    public void testEncryptDecryptNonAlphabetic() {
-        // Проверяем работу с текстом, не содержащим букв
+    public void testEncryptDecryptNonAlphabetic_NonAlphabeticText_ExpectedNoChange() {
         String plaintext = "12345!@#";
-        String encrypted = CaeserEncoder.encrypt(plaintext);
-        String decrypted = CaeserEncoder.decrypt(encrypted);
-        assertEquals(plaintext, decrypted);
+        String encrypted = CaeserEncoder.encryptCaeser(plaintext);
+        assertEquals(plaintext, encrypted);
     }
 }

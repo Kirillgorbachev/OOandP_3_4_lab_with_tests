@@ -1,6 +1,6 @@
 package org.example;
 
-public interface SpecificEncoder {
+public interface Encoder {
     public String encode();
     public String decode ();
 }

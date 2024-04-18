@@ -4,7 +4,7 @@ public class CaeserEncoder {
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
     private static final String DEFAULT_KEY = "zyxwvutsrqponmlkjihgfedcba";
 
-    public static String encrypt(String plaintext) {
+    public static String encryptCaeser(String plaintext) {
         plaintext = plaintext.toLowerCase();
         StringBuilder ciphertext = new StringBuilder();
 
@@ -23,7 +23,7 @@ public class CaeserEncoder {
         return ciphertext.toString();
     }
 
-    public static String decrypt(String ciphertext) {
+    public static String decryptCaeser(String ciphertext) {
         ciphertext = ciphertext.toLowerCase();
         StringBuilder plaintext = new StringBuilder();
 
